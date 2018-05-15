@@ -27,7 +27,7 @@ $ pip -r install requirements.txt
 ---
 后台采用 django 2.0。建议使用 postgresql：
 ```
-# gakkit/gakkit/settings.py
+# matrix/gakkit/settings.py
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -43,14 +43,14 @@ DATABASES = {
 ---
 在你的微信公众号的服务器配置中，有一个令牌（token）。拷贝到这里即可。
 ```
-# gakkit/matrix/views.py
+# matrix/matrix/views.py
 token = ''
 ```
 邮件
 ---
 最初我用的阿里云的邮箱。你可以换成你的邮箱服务器。
 ```
-# gakkit/matrix/amazon/alert.py
+# matrix/matrix/amazon/alert.py
 def send_email(recipient, content_text, content_html, subject='No subject'):
     ...
     s = smtplib.SMTP_SSL('smtpdm.aliyun.com:465')
@@ -62,8 +62,8 @@ def send_email(recipient, content_text, content_html, subject='No subject'):
 启动服务器
 ---
 可以通过 nginx 启动，但是需要根据你的情况修改相关配置：
-gakkit/gakkit_uwsgi.ini<br/>
-gakkit/gakkit_nginx.conf
+matrix/gakkit_uwsgi.ini<br/>
+matrix/gakkit_nginx.conf
 测试时可以直接用 django 启动：
 ```
 python manage.py runserver
