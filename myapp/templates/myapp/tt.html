@@ -1,0 +1,45 @@
+{% extends 'static/base.html' %}
+{% load static %}
+{% block title %}Title - Gakkit{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href='{% static "myapp/css/tt.css" %}'>
+<!-- script type="text/javascript" src='{% static "myapp/js/tt.js" %}'></script -->
+{% endblock %}
+{% block headline %}Title (标题){% endblock %}
+{% block content %}
+<div class="sec">
+    <h2 class="secTitle">Title</h2>
+    <p class="note">标题不得超过200字符。</p>
+    <p class="note">计数器只计算第一行的字符，你可以在第二行写草稿。</p>
+    <p class="note">更多关于标题的规则参考: <a href="https://www.amazon.com/gp/help/customer/display.html/ref=help_search_1-2?ie=UTF8&nodeId=200414280&qid=1508028501&sr=1-2" target="_blank">Amazon Seller Guide</a>.</p>
+    <p class="note">
+        <span>总字符数 (包括空格):</span>
+        <span class="ttc" id="ttc">0</span>
+    </p>
+    <textarea id="ttInput" class="ttInput txt"></textarea>
+    <button class="copyBtn btn" data-for="ttInput" >复制</button>
+    <button id="clearBtn" class="clearBtn btn" data-for="ttInput" >清空</button>
+</div>
+<script type="text/javascript">
+// main
+$(function() {
+    $("#ttInput").bind("propertychange input change paste cut keyup", counter);
+})
+
+// reset counter
+$("#clearBtn").click(function() {
+    $("#ttc").html('0');
+})
+
+// functions
+function counter() {
+    var l = $(this).val().split('\n')[0].length; // only count the first line
+    $("#ttc").html(l);
+    if (l > 200) {
+        $("#ttc").addClass("red");
+    } else {
+        $("#ttc").removeClass("red");
+    }
+}
+</script>
+{% endblock %}

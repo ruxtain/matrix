@@ -1,0 +1,7 @@
+Django==2.0.5
+requests==2.18.4
+numpy==1.13.3
+beautifulsoup4==4.6.0
+htmlmin==0.1.12
+django-ipware==2.1.0
+psycopg2-binary==2.7.4

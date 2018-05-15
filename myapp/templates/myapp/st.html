@@ -1,0 +1,81 @@
+{% extends 'static/base.html' %}
+{% load static %}
+{% block title %}Search Terms - Gakkit{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href='{% static "myapp/css/st.css" %}'>
+<script type="text/javascript" src='{% static "myapp/js/st.js" %}'></script>
+{% endblock %}
+{% block headline %}Search Terms (关键词){% endblock %}
+{% block content %}
+
+
+<div class="sec">
+    <h2>初步筛选 (仅限英语)</h2>
+    <p class="note">剔除非英语字符和部分无意义的字符 (适合初步处理关键词工具获得的关键词列表，如 Google Keywords Planner)</p>
+    <textarea id="gooInput" class="gooInput raw txt" placeholder="这里粘贴你的关键词:&#10;cotton jeans&#10;men jeans&#10;ripped jeans&#10;skinny jeans&#10;jeans pants&#10;casual jeans&#10;..."></textarea>  
+    <button class="clearBtn btn" data-for="gooInput" >清空</button>
+</div>
+
+<div class="sec">
+    <button id="arrowBtn1" class="arrowBtn">↓</button>
+</div>
+
+<div class="sec">
+    <h2 id="duplicate2">关键词去重</h2>
+    <p class="note">去掉重复的关键词，并排列成 5 行。</p>
+    <p class="note red">至少需要 10 个以上的关键词。</p>
+    <p class="note red">如果你的关键词过多，可能反应时间会长一点。</p>
+    <textarea id="rawInput" class="rawInput raw txt" placeholder="在这里放关键词"></textarea>  
+    <button class="copyBtn btn" data-for="rawInput" >复制</button>
+    <button class="clearBtn btn" data-for="rawInput" >清空</button>
+    <p class="right counterText">字节数: <span id="rtc">0</span></p>
+</div>
+
+<div class="sec">
+    <button id="arrowBtn2" class="arrowBtn">↓</button>
+</div>
+
+<div class="sec">
+    <h2 id="counter">字节 (bytes) 计算</h2>
+    <p class="note">不包括空格，英语和其他欧洲语言的限制是 250 字节 (日语是 500 字节).</p>
+    <textarea class="stInput txt" id="stInput" style="font-family:courier;"></textarea>
+    <p class="right counterText">字节数: <span id="stc">0</span></p>
+    <button class="copyBtn btn" data-for="stInput">复制</button>
+    <button class="clearBtn btn" data-for="stInput" >清空</button>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+
+$("#arrowBtn2").click(function() {
+    $("#arrowBtn2").attr("disabled", true); // forbid repetitive submit
+    var raw = $(".rawInput").val().toLowerCase().replace(/\s+/g, ' ').split(' ');
+    // de-duplicate
+    var cooked = [];
+    for (i in raw) {
+        if ($.inArray(raw[i], cooked)==-1) {
+            cooked.push(raw[i]);
+        }  
+    }
+    divide5(cooked.join(' ').toLowerCase()); // only allows lower case
+});
+
+function divide5(raw) {
+    $.ajax ({
+        type: 'POST',
+        url: '{% url "myapp:ajaxDivide5" %}',
+        data: { raw: raw, csrfmiddlewaretoken: "{{ csrf_token }}"},
+        success: function(data) {
+            $("#stInput").val(data); 
+            $("#arrowBtn2").attr("disabled", false);
+            // after put in the 3rd box, then count it
+            var s = $(".stInput").val().replace(/[\s\n\r]+/g, '').trim();    
+            var size = byteSize(s);
+            $("#stc").html(size);
+            scrollTo("#counter");
+        }
+    });  
+}  
+</script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "static/base.html" %}
+{% load static %}
+{% block meta %}{% endblock %}
+{% block title %}Gakkit - 最简易的亚马逊listing编辑器{% endblock %}
+{% block headline %}亚马逊 Listing 编辑器{% endblock %}
+{% block content %}
+<div class="sec">
+<br>
+<p class="note">请务必收藏本网站，以供日后使用。Gakkit 的功能有：</p>
+<br>
+<ul class="note">
+    <li><a href="{% url 'myapp:tt' %}"><b>Title:</b></a><br>简单计数器，保证标题不超过字数.</li>
+    <br>
+    <li><a href="{% url 'myapp:st' %}"><b>Search Terms:</b></a><br>去掉重复和无意义关键词，并计算字节数.</li>
+    <br>
+    <li><a href="{% url 'myapp:bp' %}"><b>Bullet Points:</b></a><br>也是简单的计数器。</li>
+    <br>
+    <li><a href="{% url 'myapp:pd' %}"><b>Product Description:</b></a><br>核心功能：将富文本转化成字符数尽可能少的 HTML 代码。</li>
+    <br>
+    <li>也可以快速定位到某个 ASIN 的 listing，或者搜索某个关键词，而无须实现打开亚马逊网站。</li>
+</ul>
+</div>
+<br>
+<div class="sec"><hr class="divider"></div>
+
+<div class="sec">
+<br>
+<p class="note">使用建议.</p>
+<br>
+<ul class="note">
+    <li><a><b>兼容性:</b></a><br>建议使用 Chrome 或者 Firefox 浏览器.</li>
+    <br>
+    
+</ul>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

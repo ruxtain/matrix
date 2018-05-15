@@ -1,0 +1,41 @@
+{% extends "static/base.html" %}
+{% load static %}
+{% block title %}Gakkit - 关于{% endblock %}
+{% block head %}
+<style type="text/css">
+.aboutH2 {
+    margin: 20px 0px 15px 5px;
+}
+.picHolder {margin: 0 auto; width: 580px;}
+.gakki {display:block; margin-left:5px; width:300px;z-index: 999; position:absolute; top: 190px;border-radius: 9px;}
+.note a:hover {cursor: pointer;}
+</style>
+{% endblock %}
+{% block headline %}关于这个站{% endblock %}
+{% block content %}
+<div id="popup"></div>
+<div class="sec">
+<h2 class="aboutH2">关于 Gakkit</h2>
+<ul class="note">
+<li>我曾是一名亚马逊销售。</li>
+<li>现在我试图分享一些亚马逊工具。当然也不止适用于亚马逊，其他平台也可能用到，欢迎你推荐给你的同事。</li>
+<li>你可以发送比特币到这个地址支持这个网站: <br><b>1KN5zmVoKCCckRrLbLCh3NLcydqS177zby</b></li>
+</ul>
+<h2 class="aboutH2">更新日志</h2>
+<p class="note">2018.03.06 - Gakkit 上线，专为中国卖家服务。</p>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

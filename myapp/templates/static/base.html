@@ -1,0 +1,96 @@
+{% load static %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><meta name="baidu_union_verify" content="57b4a02856e8d8530d4998637c4c0fd7"></head>
+<head>{% block meta %}{% endblock %}
+<meta name="description" content="Gakkit - 做最简易的亚马逊辅助工具"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="8YRgaqDFOJ" />
+<meta name="keywords" content="免费, 亚马逊listing, amazon listing,listing,gakkit, 亚马逊关键词, 亚马逊关键词优化, 亚马逊软件, 亚马逊关键词工具, 亚马逊优化, 亚马逊卖家精灵, 卖家精灵云服务, 亚马逊关键词设置技巧, 亚马逊关键词设置, 亚马逊关键词抓取, 亚马逊关键字, 亚马逊的关键词, 亚马逊 关键词, 亚马逊关键词查找, 亚马逊选品工具, 亚马逊选品软件, 亚马逊运营软件, 亚马逊关键词查找工具, 亚马逊如何写5个关键词, 亚马逊search term, 亚马逊keywords, 亚马逊关键词挖掘软件, 亚马逊运营工具, 亚马逊选品助手, 亚马逊关键词分析, 亚马逊关键词搜索, 亚马逊关键词排名查询, 亚马逊关键词反查, 数据脉 亚马逊, 亚马逊关键词反查, 亚马逊测评, 亚马逊对手监控, 亚马逊review, 亚马逊评论, 亚马逊数据, 亚马逊爆款, 亚马逊评论, 亚马逊推广, 亚马逊软件, 亚马逊分析, 亚马逊工具, 亚马逊营销"/>
+<title>{% block title %}{% endblock %}</title>
+<script type="text/javascript" src='{% static "myapp/js/jquery-1.7.2.min.js" %}'></script>
+<script type="text/javascript" src='{% static "myapp/js/jquery.cookie.js" %}'></script>
+<script type="text/javascript" src='{% static "myapp/js/base.js" %}'></script>
+<link rel="stylesheet" type="text/css" href='{% static "myapp/css/base.css" %}'>
+<link rel="shortcut icon" href='{% static "myapp/favicon.ico" %}'/>
+{% block head %}{% endblock %}
+</head>
+
+<script type="text/javascript">
+
+</script>
+
+<body>
+<div class="sec top">
+    <a href="{% url 'myapp:home' %}" style="text-decoration:none;">
+        <img id="logo" style="position:relative; top:5px;" src='{% static "myapp/img/logo.png" %}' />
+    </a>
+    <h1 class="topH1">Gakkit</h1>
+    <br>
+    <br>
+    <h1>&nbsp;{% block headline %}{% endblock %}</h1>
+</div>
+<div class="searchbox">
+    <br>
+    <ul class="searchboxtop">
+        <li><a href="#" class="active">US</a></li>
+        <li><a href="#">UK</a></li>
+        <li><a href="#">ES</a></li>
+        <li><a href="#">DE</a></li>
+        <li><a href="#">JP</a></li>
+        <li><a href="#">FR</a></li>
+        <li><a href="#">IT</a></li>
+        <li><a href="#">CA</a></li>
+    </ul>
+    <div class="bodys">
+        <p><input type="text" value="" id="searchbox" class="one" placeholder="输入 ASIN 或者关键词" /><button id="searchbutton" class="one1"><a target="_blank">检索 亚马逊</a></button></p>
+    </div>
+</div>  
+<div style="clear:both;"></div>
+<div class="sec menubar">
+    <a class="menu" id="Page" href="{% url 'myapp:home' %}">首页</a>
+    <a class="menu" id="ttPage" href="{% url 'myapp:tt' %}">Title</a>
+    <a class="menu" id="stPage" href="{% url 'myapp:st' %}">Search Terms</a>
+    <a class="menu" id="bpPage" href="{% url 'myapp:bp' %}">Bullet Points</a>
+    <a class="menu" id="pdPage" href="{% url 'myapp:pd' %}">Product Description</a>
+    <a class="menu" id="aboutPage" href="{% url 'myapp:about' %}">关于</a>
+</div>
+<div class="sec"><hr class="divider"></div>
+
+{% block content %}{% endblock %}
+
+<footer>
+<br>
+<div class="sec footer">
+    <p>任何疑问或者合作请发邮件至:</p> 
+    <p><b>support@gakkit.com</b></p>
+    <p><a href="{% url 'myapp:about' %}">Gakkit 是什么?</a></p>
+    <p class="copyright">© 2017-2018 Gakkit.com 版权所有</p>
+</div>
+<script type="text/javascript">
+
+$('#feedbackBtn').click(function() {
+    var feedback = $('#feedbackTxt').val();
+    if (/\S{1,}/.test(feedback)){
+        $.ajax ({
+            type: 'POST',
+            url: '{% url "myapp:ajaxFeedback" %}',
+            data: { feedback: feedback, csrfmiddlewaretoken: "{{ csrf_token }}"},
+            success: function(data) {
+                if (data=='saved.') {
+                    $("#hideAfterSubmit").hide();
+                    $("#showAfterSubmit").show();
+                }
+            }
+        });     
+    }
+})
+
+</script>
+
+<script type="text/javascript" src="https://js.users.51.la/19311433.js"></script>
+{% block footer %}{% endblock %}
+</footer>
+<br>
+</div>
+</body>
+</html>

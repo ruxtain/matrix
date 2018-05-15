@@ -1,0 +1,13 @@
+// convert keywords to non-repetitive list
+// button {font}
+
+.raw {
+    height: 150px;
+    resize: none;
+    font-size: 15px;
+}
+
+/*search terms*/
+.stInput {height: 180px;resize: none;font-size: 14.5px;}
+/*counter*/
+.counterText {font-size: 15px;padding: 8px;}

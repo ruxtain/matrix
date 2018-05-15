@@ -1,0 +1,169 @@
+{% extends 'static/base.html' %}
+{% load static %}
+{% block title %}Product Description - Gakkit{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href='{% static "myapp/css/pd.css" %}'>
+<link rel="stylesheet" type="text/css" href='{% static "myapp/css/quill.css" %}'>
+<script type="text/javascript" src='{% static "myapp/js/quill.js" %}'></script>
+<script type="text/javascript" src='{% static "myapp/js/pd.js" %}'></script>
+
+{% endblock %}
+{% block headline %}Product Description (产品描述)<data id="topData"></data>{% endblock %}
+{% block content %}
+<div class="sec">
+    <h2>将你的格式化文本一键转化成 HTML 代码。</h2>
+    <p class="note">支持 <b>加粗 (Bold)</b> 和 <i>斜体 (Itatic)</i>.</p>
+    <p class="note red" style="margin-bottom:10px;">请切换至 Chrome 浏览器如果无法正确粘贴.</p>
+    <div id="editor" class="rawInput raw" style="font-size: 15px;" autofocus></div>
+    <button class="copyQuillBtn btn">复制</button>
+    <button class="clearQuillBtn btn">清空</button>
+    <p class="right charCounter">总字符数: <span id="pdc0">0</span></p>
+</div>
+
+<div class="sec">
+    <button id="arrow1" class="arrowBtn">↓</button>
+</div>
+
+<div class="sec" id="htmlCode" >
+    <h2>点击“复制”获取你的 HTML 代码,</h2>
+    <p class="note">英语文本请确保不要超过亚马逊规定的上限（2000字符）。</p>
+    <textarea class="pdInput txt" id="pdInput"></textarea>
+    <button class="copyBtn btn" data-for="pdInput" >复制</button>
+    <button class="clearBtn btn" data-for="pdInput" >清空</button>
+    <p class="right charCounter">总字符数: <span id="pdc">0</span></p>
+</div>
+
+<div class="sec">
+    <button class="submitBtn arrowBtn">↓</button>
+</div>
+
+<br>
+<div class="sec">
+    <h2 class="secTitle" name="previewSec" id="previewSec">预览 HTML 代码</h2>
+    <p class="note">请确保这里的预览效果和你一开始粘贴的一致.</p>
+    <p class="note">如果不一致，你可能需要在上面的输入框内微调代码.</p>
+</div>
+<div class="sec"><hr class="divider"></div>
+<div class="sec preview">这里你将看到转化后的 HTML 代码的实际效果.</div>
+<script type="text/javascript">
+
+var toolbarOptions = [
+    // [{ size: [ 'small', false, 'large' ]}], 
+    ['bold', 'italic'], 
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['clean'],
+];
+var quill = new Quill('#editor', {
+theme: 'snow',
+modules: {
+    toolbar: toolbarOptions
+    },
+    clipboard: {
+      matchVisual: false
+    },
+  //   formats: [ // allowed tags
+  //   'bold',
+  //   'italic',
+  //   'list',
+  // ],
+});
+
+// retrieveQuillCookie();
+
+quill.on('editor-change', function() {
+    var content = quill.getContents();
+    $.removeCookie('quill-content');  // research shows that u have to remove the previous cookie
+    // save it for 1 day, don't waste user's hard drive!; article specific
+    $.cookie('quill-content', JSON.stringify(content), {expires:1});  
+    $("#pdc0").html(quill.getLength()-1);
+})
+///////////////////////////////////////////////////////////
+// function retrieveQuillCookie() {
+//     var content = $.cookie('quill-content');
+//     quill.setContents($.parseJSON(content));
+// }
+
+function delta2HTML(inputDelta) {
+    var tempCont = document.createElement("div");
+    (new Quill(tempCont)).setContents(inputDelta);
+    var rawHTML = tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
+    return rawHTML
+}
+
+function previewHTML() {
+    var pd = $(".pdInput").val();
+    pd = pd.replace(/<script.*?>.*?<\/script\s*?>/g, '');
+    $(".preview").html("<p class='note'>HTML Preview. Total Characters: " 
+                        + pd.length 
+                        + "</p><hr class='divider'>" 
+                        + "<div class='previewContent'>"
+                        + pd
+                        + "</div>");    
+}
+
+$(function() {  
+    // 点击后生成 html code 并预览
+    $("#arrow1").click(function() {
+        $(this).attr("disabled", "");
+        delta = quill.getContents();
+        htmlCode = delta2HTML(delta);
+        testCode = htmlCode.replace(/<.*?>/g, '')
+                           .replace(/\s+/g, '');
+        if (testCode=="") { // 无内容，不提交到服务器
+            $("#arrow1").removeAttr("disabled"); // 没有真正提交数据 那么按钮仍然可以按
+            return false; //按了无反应   
+        } else {
+            console.log(htmlCode);
+            $.ajax ({
+                type: 'POST',
+                url: '{% url "myapp:ajaxCodeGenerator" %}',
+                data: { htmlCode: htmlCode, csrfmiddlewaretoken: "{{ csrf_token }}"},
+                success: function(data) {
+                    // console.log(data);
+                    $(".pdInput").val(data); // 先把代码放到框里 才能预览
+                    previewHTML();
+                    $("#arrow1").removeAttr("disabled"); // 返回数据后才能再次按下
+                    scrollTo("#previewSec");
+
+                    var s = $(".pdInput").val();
+                    $("#pdc").html(s.length);
+                }
+            });
+        }
+    });
+
+    // 仅预览
+    $(".submitBtn").click(function() {
+        previewHTML();    
+        scrollTo("#previewSec");
+    })
+
+    // 清空输入框
+    $(".clearQuillBtn").click(function() {
+        quill.setContents([]);
+        scrollTo("#topData", time=0);
+        quill.focus();
+    })
+
+    // 复制输入框
+    $(".copyQuillBtn").click(function() {
+        quill.setSelection(0,5);
+        var content = quill.getText();
+        // console.log(content);
+        copyTextToClipboard(content);
+        // copy 后模拟全选，因为其他输入框都是这样
+        quill.setSelection(0,9999999999999999999999);
+    })
+
+    // 计算字符数(code)
+    $(".pdInput").bind('input propertychange', function() {
+        var s = $(this).val();
+        $("#pdc").html(s.length);
+    })
+
+
+})
+
+
+</script>
+{% endblock %}

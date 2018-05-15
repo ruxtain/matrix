@@ -1,0 +1,83 @@
+{% load static %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>{% block meta %}{% endblock %}
+<meta name="description" content="Gakkit is a free, simple, and useful Amazon listing editing kit for Amazon sellers."/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="baidu-site-verification" content="8YRgaqDFOJ" />
+<meta name="keywords" content="免费,亚马逊listing,amazon listing,listing,gakkit"/>
+<title>{% block title %}{% endblock %}</title>
+<script type="text/javascript" src='{% static "myapp/js/jquery-1.7.2.min.js" %}'></script>
+<script type="text/javascript" src='{% static "myapp/js/jquery.cookie.js" %}'></script>
+<script type="text/javascript" src='{% static "myapp/js/base.js" %}'></script>
+<link rel="stylesheet" type="text/css" href='{% static "myapp/css/base.css" %}'>
+<link rel="shortcut icon" href='{% static "myapp/favicon.ico" %}'/>
+{% block head %}{% endblock %}
+</head>
+
+<script type="text/javascript">
+
+</script>
+
+<body>
+<div class="sec top">
+    <a href="{% url 'myapp:home' %}" style="text-decoration:none;">
+        <img id="logo" style="position:relative; top:5px;" src='{% static "myapp/img/logo.png" %}' />
+    </a>
+    <h1 class="topH1">Gakkit</h1>
+    <br>
+    <br>
+    <h1><i>&nbsp;{% block headline %}{% endblock %}</i></h1>
+</div>
+<div class="searchbox">
+    <br>
+    <ul class="searchboxtop">
+        <li><a href="#" class="active">US</a></li>
+        <li><a href="#">UK</a></li>
+        <li><a href="#">ES</a></li>
+        <li><a href="#">DE</a></li>
+        <li><a href="#">JP</a></li>
+        <li><a href="#">FR</a></li>
+        <li><a href="#">IT</a></li>
+        <li><a href="#">CA</a></li>
+    </ul>
+    <div class="bodys">
+        <p><input type="text" value="" id="searchbox" class="one" placeholder="Search by ASIN or keywords" /><button id="searchbutton" class="one1"><a target="_blank">Search Amazon</a></button></p>
+    </div>
+</div>  
+<div style="clear:both;"></div>
+<div class="sec menubar">
+    <a class="menu" id="Page" href="{% url 'myapp:home' %}">Home</a>
+    <a class="menu" id="ttPage" href="{% url 'myapp:tt' %}">Title</a>
+    <a class="menu" id="stPage" href="{% url 'myapp:st' %}">Search Terms</a>
+    <a class="menu" id="bpPage" href="{% url 'myapp:bp' %}">Bullet Points</a>
+    <a class="menu" id="pdPage" href="{% url 'myapp:pd' %}">Product Description</a>
+    <a class="menu" id="aboutPage" href="{% url 'myapp:about' %}">About</a>
+</div>
+<div class="sec"><hr class="divider"></div>
+
+{% block content %}{% endblock %}
+<footer>
+<br>
+<br>
+<br>
+<div class="sec footer">
+    <p>Send you feedback to:</p> 
+    <p><b>support@gakkit.com</b></p>
+    <p><a href="{% url 'myapp:about' %}">What's Gakkit?</a></p>
+    <p class="copyright">2017 © Gakkit - Copyright Reserved | Yue ICP Record #17128690</p>
+</div>
+<script type="text/javascript">var a1433tf="51la";var a1433pu="";var a1433pf="51la";var a1433su=window.location;var a1433sf=document.referrer;var a1433of="";var a1433op="";var a1433ops=1;var a1433ot=1;var a1433d=new Date();var a1433color="";if (navigator.appName=="Netscape"){a1433color=screen.pixelDepth;} else {a1433color=screen.colorDepth;}
+try{a1433tf=top.document.referrer;}catch(e){}
+try{a1433pu =window.parent.location;}catch(e){}
+try{a1433pf=window.parent.document.referrer;}catch(e){}
+try{a1433ops=document.cookie.match(new RegExp("(^| )a1433_pages=([^;]*)(;|$)"));a1433ops=(a1433ops==null)?1: (parseInt(unescape((a1433ops)[2]))+1);var a1433oe =new Date();a1433oe.setTime(a1433oe.getTime()+60*60*1000);document.cookie="a1433_pages="+a1433ops+ ";path=/;expires="+a1433oe.toGMTString();a1433ot=document.cookie.match(new RegExp("(^| )a1433_times=([^;]*)(;|$)"));if(a1433ot==null){a1433ot=1;}else{a1433ot=parseInt(unescape((a1433ot)[2])); a1433ot=(a1433ops==1)?(a1433ot+1):(a1433ot);}a1433oe.setTime(a1433oe.getTime()+365*24*60*60*1000);document.cookie="a1433_times="+a1433ot+";path=/;expires="+a1433oe.toGMTString();}catch(e){}
+try{if(document.cookie==""){a1433ops=-1;a1433ot=-1;}}catch(e){}
+a1433of=a1433sf;if(a1433pf!=="51la"){a1433of=a1433pf;}if(a1433tf!=="51la"){a1433of=a1433tf;}a1433op=a1433pu;try{lainframe}catch(e){a1433op=a1433su;}
+a1433src='//web.users.51.la/go.asp?svid=12&id=19311433&tpages='+a1433ops+'&ttimes='+a1433ot+'&tzone='+(0-a1433d.getTimezoneOffset()/60)+'&tcolor='+a1433color+'&sSize='+screen.width+','+screen.height+'&referrer='+escape(a1433of)+'&vpage='+escape(a1433op)+'&vvtime='+a1433d.getTime();
+setTimeout('a1433img = new Image;a1433img.src=a1433src;',0);</script>
+{% block footer %}{% endblock %}
+</footer>
+<br>
+</div>
+</body>
+</html>

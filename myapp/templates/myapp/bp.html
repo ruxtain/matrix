@@ -1,0 +1,25 @@
+{% extends 'static/base.html' %}
+{% load static %}
+{% block title %}Bullet Points - Gakkit{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href='{% static "myapp/css/bp.css" %}'>
+<script type="text/javascript" src='{% static "myapp/js/bp.js" %}'></script>
+{% endblock %}
+{% block headline %}Bullet Points (卖点){% endblock %}
+{% block content %}
+<div class="sec">
+    <h2 class="secTitle">Bullet Points</h2>
+    <p class="note">只计算最前面 5 个非空行的字符数。</p>
+    <p class="note counterText">
+        <span>前 5 行的字符数分别是:</span>
+        <span class="bpc" id="bpc1">0</span>,
+        <span class="bpc" id="bpc2">0</span>,
+        <span class="bpc" id="bpc3">0</span>,
+        <span class="bpc" id="bpc4">0</span>,
+        <span class="bpc" id="bpc5">0</span>
+    </p>
+    <textarea id="bpInput" class="bpInput txt"></textarea>
+    <button class="copyBtn btn" data-for="bpInput" >复制</button>
+    <button class="clearBtn btn" data-for="bpInput" >清空</button>
+</div>
+{% endblock %}
