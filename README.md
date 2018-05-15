@@ -23,7 +23,8 @@ $ virtualenv your-env
 $ source your-env/bin/activate
 $ pip -r install requirements.txt
 ```
-## 数据库
+数据库
+---
 后台采用 django 2.0。建议使用 postgresql：
 ```
 # gakkit/gakkit/settings.py
@@ -59,8 +60,7 @@ def send_email(recipient, content_text, content_html, subject='No subject'):
 ```
 
 启动服务器
-===
-
+---
 可以通过 nginx 启动，但是需要根据你的情况修改相关配置：
 gakkit/gakkit_uwsgi.ini<br/>
 gakkit/gakkit_nginx.conf
