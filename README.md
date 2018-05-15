@@ -1,10 +1,13 @@
-# matrix
-矩阵数据项目（亚马逊差评监控+微信公众号）
+matrix
+===
+矩阵数据项目（亚马逊差评监控\+微信公众号）<br/>
 项目地址：
 https://github.com/ruxtain/matrix
 
 ---
-# 简介
+
+简介
+===
 matrix 主要由三个部分组成：
 + Listing 编辑页 （使用方法可以参考 [这里](https://www.douban.com/group/topic/108880198/))
 + 亚马逊差评监控爬虫
@@ -12,7 +15,8 @@ matrix 主要由三个部分组成：
 
 微信公众号后台的作用是允许用户通过公众号提交店铺地址，从而由产品爬虫遍历店铺并得到所有的 ASIN （即产品 ID）。再由差评监控爬虫定时抓取差评数量，并在差评数增加时发送邮件通知用户。
 
-# 配置
+配置
+===
 首先创建虚拟环境并添加依赖：
 ```bash
 $ virtualenv your-env
@@ -34,13 +38,15 @@ DATABASES = {
     }
 }
 ```
-## 公众号关联
+公众号关联
+---
 在你的微信公众号的服务器配置中，有一个令牌（token）。拷贝到这里即可。
 ```
 # gakkit/matrix/views.py
 token = ''
 ```
-## 邮件
+邮件
+---
 最初我用的阿里云的邮箱。你可以换成你的邮箱服务器。
 ```
 # gakkit/matrix/amazon/alert.py
@@ -52,22 +58,23 @@ def send_email(recipient, content_text, content_html, subject='No subject'):
     s.quit()
 ```
 
----
-
-# 启动服务器
+启动服务器
+===
 
 可以通过 nginx 启动，但是需要根据你的情况修改相关配置：
-gakkit/gakkit_uwsgi.ini
+gakkit/gakkit_uwsgi.ini<br/>
 gakkit/gakkit_nginx.conf
 测试时可以直接用 django 启动：
 ```
 python manage.py runserver
 ```
-# 启动爬虫
+启动爬虫
+---
 ```
 python manage.py shell < main.py
 ```
-# 日志
+日志
+---
 ```
 ls gakkit/logs
 ```
